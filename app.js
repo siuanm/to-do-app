@@ -5,8 +5,6 @@ function onReady() {
     const newToDoText = document.getElementById('newToDoText');
     const toDoList = document.getElementById('toDoList');
 
-
-    addToDoForm.addEventListener();
      addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
 
@@ -31,7 +29,7 @@ function onReady() {
  // attach the li to the ul
   toDoList.appendChild(newLi);
 
-  // create a new button
+// create a new button
   let deleteBtn= document.createElement('button')
   deleteBtn.innerHTML = '<span>Delete</span>';
 
@@ -44,8 +42,12 @@ function onReady() {
   //empty the input
   newToDoText.value = '';
 
+
+
   });
 }
+
+
 
 window.onload = function() {
    alert("The window has loaded!");
