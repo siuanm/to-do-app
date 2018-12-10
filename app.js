@@ -1,6 +1,6 @@
 
 function onReady() {
-  
+
   const addToDoForm = document.getElementById('addToDoForm');
     const newToDoText = document.getElementById('newToDoText');
     const toDoList = document.getElementById('toDoList');
@@ -30,6 +30,16 @@ function onReady() {
 
  // attach the li to the ul
   toDoList.appendChild(newLi);
+
+  // create a new button
+  let deleteBtn= document.createElement('button')
+  deleteBtn.innerHTML = '<span>Delete</span>';
+
+//set the input type to button
+  deleteBtn.type = 'button';
+
+// attach the button to the li
+  newLi.appendChild(deleteBtn);
 
   //empty the input
   newToDoText.value = '';
