@@ -1,27 +1,29 @@
 
 function onReady() {
+  let toDos = JSON.parse( localStorage.getItem('toDos') ) || [];
   let id = toDos.length || 0;
-  const toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
+  const newToDoText = document.getElementById('newToDoText');
 
   function createNewToDo() {
-    const newToDoText = document.getElementById('newToDoText');
-       if (!newToDoText.value) { return; }
-
        toDos.push({
-       title: newToDoText.value,
-       complete: false
-       id: ++id
-  });
+        title: newToDoText.value,
+        complete: false,
+        id: ++id
+     });
+  }
 
-  newToDoText.value = '';
-
-    renderTheUI();
+ function deleteToDo(id) {
+   return toDos.filter(toDo => toDo.id !== id);
  }
+
+ function saveToDos() {
+   localStorage.setItem('toDos', JSONstringify(toDos) );
+ }
+
 
  function renderTheUI() {
    const toDoList = document.getElementById('toDoList');
-
    toDoList.textContent = '';
 
    toDos.forEach(function(toDo) {
@@ -29,11 +31,17 @@ function onReady() {
 
        const checkbox = document.createElement('input');
        checkbox.type = "checkbox";
+       checkbox.checked = toDo.complete;
 
-       const deletBtn = document.createElement('button')
+       const deleteBtn = document.createElement('button')
        deleteBtn.innerHTML = '<span>Delete</span>';
 
-       newLi.textContent = toDo.title;
+       newLi.innerHTML = toDo.title;
+
+       checkbox.addEventListener('click', function() {
+         toDo.complete = checkbox.checked ? true : false;
+         saveToDos();
+       });
 
        toDoList.appendChild(newLi);
        newLi.appendChild(checkbox);
@@ -43,16 +51,20 @@ function onReady() {
          toDos = deleteToDo(toDo.id);
          renderTheUI();
          saveToDos();
-       })
+       });
    });
  }
 
- addToDoForm.addEventListener('submit', event => {
+ addToDoForm.addEventListener('submit', function(event) {
    event.preventDefault();
    createNewToDo();
+   newToDoText.value = '';
+   renderTheUI();
+   saveToDos();
  });
 
   renderTheUI();
+  saveToDos();
 }
 
 window.onload = function() {
